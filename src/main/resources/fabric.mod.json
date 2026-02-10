@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "spear-origin",
+	"id": "spear_origin",
 	"version": "${version}",
 	"name": "Spear Origin",
 	"description": "This is an example description! Tell everyone what your mod is about!",
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/spear-origin/icon.png",
+	"icon": "assets/spear_origin/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

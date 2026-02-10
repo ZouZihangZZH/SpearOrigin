@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SpearOrigin implements ModInitializer {
-	public static final String MOD_ID = "spear-origin";
+	public static final String MOD_ID = "spear_origin";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
