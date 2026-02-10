@@ -1,10 +1,10 @@
 {
-  "item.spear-origin.copper_spear": "Copper Spear",
-  "item.spear-origin.diamond_spear": "Diamond Spear",
-  "item.spear-origin.gold_spear": "Gold Spear",
-  "item.spear-origin.iron_spear": "Iron Spear",
-  "item.spear-origin.netherite_spear": "Netherite Spear",
-  "item.spear-origin.stone_spear": "Stone Spear",
-  "item.spear-origin.wood_spear": "Wood Spear",
+  "item.spear_origin.copper_spear": "Copper Spear",
+  "item.spear_origin.diamond_spear": "Diamond Spear",
+  "item.spear_origin.gold_spear": "Gold Spear",
+  "item.spear_origin.iron_spear": "Iron Spear",
+  "item.spear_origin.netherite_spear": "Netherite Spear",
+  "item.spear_origin.stone_spear": "Stone Spear",
+  "item.spear_origin.wood_spear": "Wood Spear",
   "itemGroup.spear_origin": "Spear: Origin"
 }

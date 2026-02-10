@@ -1,9 +1,9 @@
 {
-  "item.spear-origin.copper_spear": "铜枪",
-  "item.spear-origin.diamond_spear": "钻石枪",
-  "item.spear-origin.iron_spear": "铁枪",
-  "item.spear-origin.netherite_spear": "下界合金枪",
-  "item.spear-origin.stone_spear": "石枪",
-  "item.spear-origin.wood_spear": "木枪",
+  "item.spear_origin.copper_spear": "铜枪",
+  "item.spear_origin.diamond_spear": "钻石枪",
+  "item.spear_origin.iron_spear": "铁枪",
+  "item.spear_origin.netherite_spear": "下界合金枪",
+  "item.spear_origin.stone_spear": "石枪",
+  "item.spear_origin.wood_spear": "木枪",
   "itemGroup.spear_origin": "枪道：归元"
 }
