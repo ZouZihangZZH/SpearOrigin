@@ -1,5 +1,6 @@
 package com.zzh.spear_origin.datagen;
 
+import com.zzh.spear_origin.block.ModBlocks;
 import com.zzh.spear_origin.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -15,7 +16,6 @@ public class ModModelProvider extends FabricModelProvider {
     //重写方块
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
     }
 
     //重写物品
@@ -28,5 +28,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.GOLD_SPEAR, Models.HANDHELD);
         itemModelGenerator.register(ModItems.DIAMOND_SPEAR, Models.HANDHELD);
         itemModelGenerator.register(ModItems.NETHERITE_SPEAR, Models.HANDHELD);
+
+        itemModelGenerator.register(ModBlocks.SPEAR_REFORGING_TABLE.asItem(), Models.GENERATED);
     }
 }
