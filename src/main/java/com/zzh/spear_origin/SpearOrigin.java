@@ -1,5 +1,6 @@
 package com.zzh.spear_origin;
 
+import com.zzh.spear_origin.block.ModBlocks;
 import com.zzh.spear_origin.block.entity.ModBlockEntities;
 import com.zzh.spear_origin.item.ModItemGroups;
 import com.zzh.spear_origin.item.ModItems;
@@ -18,5 +19,6 @@ public class SpearOrigin implements ModInitializer {
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
 		ModBlockEntities.registerBlockEntities();
+		ModBlocks.registerModBlocks();
 	}
 }

@@ -6,61 +6,85 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class SpearReforgingScreenHandler extends ScreenHandler {
     private final Inventory inventory;
+    // ✅ 1. 定义这个变量，报错就会消失
+    private final PropertyDelegate propertyDelegate;
 
-    // 🏗️ 客户端构造函数
-    // 当客户端收到服务器发来的“打开界面”数据包时调用
+    // --- 🏗️ 客户端构造函数 ---
+    // 客户端不知道具体数据，所以创建一个假的 ArrayPropertyDelegate (2个数据：进度, 总工时)
     public SpearReforgingScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        // 客户端不知道具体的 Inventory 是啥，所以创建一个 3 格大小的“假”背包
-        this(syncId, playerInventory, new SimpleInventory(3));
+        this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(2));
     }
 
-    // 🏗️ 服务器构造函数
-    // 当方块实体在服务器端打开界面时调用
-    public SpearReforgingScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-        // 🔴 预警：ModScreenHandlers 还没写，等下会报错
+    // --- 🏗️ 服务器构造函数 ---
+    // 这是主构造函数，所有的逻辑都在这里
+    public SpearReforgingScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate delegate) {
         super(ModScreenHandlers.SPEAR_REFORGING_SCREEN_HANDLER, syncId);
 
-        checkSize(inventory, 3); // 检查背包大小是否正确
-        this.inventory = inventory;
+        // 检查背包大小 (现在是 4 个格子)
+        checkSize(inventory, 4);
 
-        // 必须调用，让库存知道被打开了
+        this.inventory = inventory;
+        this.propertyDelegate = delegate; // 赋值
+
         inventory.onOpen(playerInventory.player);
 
-        // --- 1. 添加机器自带的 3 个格子 ---
-        // 参数：inventory, slotIndex, xPosition, yPosition
-        // 这里的坐标 (x, y) 是相对于 GUI 左上角的像素位置
-        // 我们暂时假设它们排成一排，以后有了贴图再微调
-        this.addSlot(new Slot(inventory, 0, 44, 20)); // 模版槽
-        this.addSlot(new Slot(inventory, 1, 80, 20)); // 武器槽
-        this.addSlot(new Slot(inventory, 2, 116, 20)); // 材料槽
+        // --- 1. 添加数据同步 (进度条) ---
+        // 这行代码让客户端能实时看到服务器的进度条变化
+        addProperties(delegate);
 
-        // --- 2. 添加玩家背包 (27个格子) ---
-        // 这是一个标准的双层循环，用来生成 3x9 的玩家背包区域
+        // --- 2. 机器自带格子 (Input) ---
+        this.addSlot(new Slot(inventory, 0, 44, 20)); // 模版
+        this.addSlot(new Slot(inventory, 1, 80, 20)); // 武器
+        this.addSlot(new Slot(inventory, 2, 116, 20)); // 材料
+
+        // --- 3. 机器输出格子 (Output) ---
+        // 自定义匿名内部类：禁止玩家手动往里塞东西
+        this.addSlot(new Slot(inventory, 3, 152, 20) {
+            @Override
+            public boolean canInsert(ItemStack stack) {
+                return false;
+            }
+        });
+
+        // --- 4. 玩家背包 (3x9) ---
         for (int m = 0; m < 3; ++m) {
             for (int l = 0; l < 9; ++l) {
                 this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
             }
         }
 
-        // --- 3. 添加玩家快捷栏 (9个格子) ---
+        // --- 5. 玩家快捷栏 (1x9) ---
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
 
-    // 🔒 权限检查：玩家能不能用这个界面？
+    // --- 辅助方法：获取进度条数据 (供 GUI 渲染使用) ---
+    public boolean isCrafting() {
+        return propertyDelegate.get(0) > 0;
+    }
+
+    public int getScaledProgress() {
+        int progress = this.propertyDelegate.get(0);
+        int maxProgress = this.propertyDelegate.get(1);  // Max Progress
+        int progressArrowSize = 26; // 箭头像素宽度 (根据你的贴图调整)
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
     }
 
-    // 🚀 Shift 键快速移动逻辑 (最复杂但必须写的部分)
-    // 如果不写这个，玩家按 Shift 拿东西时游戏会崩溃或卡死
+    // --- Shift 键快速移动逻辑 (已更新为适配 4 格子) ---
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -69,16 +93,21 @@ public class SpearReforgingScreenHandler extends ScreenHandler {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
 
-            // 如果点击的是我们机器里的格子 (0, 1, 2)
-            if (invSlot < this.inventory.size()) {
-                // 尝试移动到玩家背包
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+            // 0-3 是机器格子，4-39 是玩家背包
+            if (invSlot < 4) {
+                // 从机器移到玩家背包
+                if (!this.insertItem(originalStack, 4, 40, true)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            // 如果点击的是玩家背包里的东西
-            else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
-                return ItemStack.EMPTY;
+                slot.onQuickTransfer(originalStack, newStack);
+            } else {
+                // 从玩家背包移到机器
+                // 优先尝试放入 模版(0) 或 武器(1) 或 材料(2)
+                // insertItem 参数：(stack, startIndex, endIndex, fromLast)
+                if (!this.insertItem(originalStack, 0, 3, false)) {
+                    // 如果机器满了，就什么都不做 (不往输出槽 3 塞东西)
+                    return ItemStack.EMPTY;
+                }
             }
 
             if (originalStack.isEmpty()) {
@@ -86,6 +115,12 @@ public class SpearReforgingScreenHandler extends ScreenHandler {
             } else {
                 slot.markDirty();
             }
+
+            if (originalStack.getCount() == newStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTakeItem(player, originalStack);
         }
         return newStack;
     }

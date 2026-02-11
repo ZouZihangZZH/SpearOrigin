@@ -19,7 +19,22 @@ public class ModItemGroups {
                     .displayName(Text.translatable("itemGroup.spear_origin"))
                     .icon(() -> new ItemStack(ModItems.WOOD_SPEAR))
                     .entries((displayContext, entries) -> {
+                        //添加武器
                         entries.add(ModItems.WOOD_SPEAR);
+                        entries.add(ModItems.STONE_SPEAR);
+                        entries.add(ModItems.COPPER_SPEAR);
+                        entries.add(ModItems.IRON_SPEAR);
+                        entries.add(ModItems.GOLD_SPEAR);
+                        entries.add(ModItems.DIAMOND_SPEAR);
+                        entries.add(ModItems.NETHERITE_SPEAR);
+                        //添加模版
+                        entries.add(ModItems.WOOD_TO_STONE_TEMPLATE);
+                        entries.add(ModItems.STONE_TO_COPPER_TEMPLATE);
+                        entries.add(ModItems.COPPER_TO_IRON_TEMPLATE);
+                        entries.add(ModItems.IRON_TO_GOLD_TEMPLATE);
+                        entries.add(ModItems.GOLD_TO_DIAMOND_TEMPLATE);
+                        entries.add(ModItems.DIAMOND_TO_NETHERITE_TEMPLATE);
+                        //添加归元台
                         entries.add(ModBlocks.SPEAR_REFORGING_TABLE);
                     }).build());
 
