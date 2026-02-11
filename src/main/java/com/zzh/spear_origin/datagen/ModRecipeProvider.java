@@ -190,8 +190,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('@', TRItem)
                 .input('#', BLItem)
                 .input('$', BRItem)
-                .input('@', crossItem)
-                .input('*', centerItem)
+                .input('*', crossItem)
+                .input('X', centerItem)
 
                 // 解锁条件：当玩家获得“核心材料”时解锁配方
                 .criterion(hasItem(centerItem), conditionsFromItem(centerItem))

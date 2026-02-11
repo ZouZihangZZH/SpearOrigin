@@ -1,10 +1,13 @@
 package com.zzh.spear_origin.item;
 
+import com.zzh.spear_origin.SpearOrigin;
 import com.zzh.spear_origin.block.ModBlocks;
+import com.zzh.spear_origin.item.custom.SpearTemplateItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -19,29 +22,28 @@ public class ModItems {
         return Registry.register(Registries.ITEM, new Identifier("spear_origin", name), item);
     }
 
-    //辅助模版组册方法
-    private static Item registerSmithingTemplate(String name, String appliesToKey, String ingredientsKey) {
-        //定义模版在“基础物品槽（左）”显示的空图标
-        List<Identifier> emptyBaseSlotTextures = Util.make(new ArrayList<>(), list -> {
-            list.add(new Identifier("item/empty_slot_sword"));
-            list.add(new Identifier("item/empty_slot_pickaxe"));
-        });
+    /**
+     * 封装模板注册逻辑
+     */
+    private static Item registerTemplate(String id, String upgradeName) {
+        Text appliesTo = t("smithing_template." + upgradeName + ".applies_to").formatted(Formatting.BLUE);
+        Text ingredients = t("smithing_template." + upgradeName + ".ingredients").formatted(Formatting.BLUE);
+        Text title = Text.translatable(Util.createTranslationKey("upgrade", new Identifier(SpearOrigin.MOD_ID, upgradeName))).formatted(Formatting.GRAY);
+        Text baseDesc = t("smithing_template." + upgradeName + ".base_slot_description");
+        Text addDesc = t("smithing_template." + upgradeName + ".additions_slot_description");
 
-        //定义模版在“材料槽（右）”显示的空图标
-        List<Identifier> emptyAdditionsSlotTextures = Util.make(new ArrayList<>(), list -> {
-            list.add(new Identifier("item/empty_slot_ingot"));
-        });
+        List<Identifier> icons = List.of(new Identifier("minecraft", "item/empty_slot_sword"));
+        List<Identifier> materials = List.of(new Identifier("minecraft", "item/empty_slot_ingot"));
 
-        //创建物品
-        return registerItem(name, new SmithingTemplateItem(
-                Text.translatable(appliesToKey).formatted(Formatting.BLUE), // "适用与..." 的文字
-                Text.translatable(ingredientsKey).formatted(Formatting.BLUE), // "材料..." 的文字
-                Text.translatable("item.spear_origin.name_upgrade_text"), // 升级界面的标题
-                Text.translatable("item.spear_origin.base_slot_text"),    // 左边格子的提示
-                Text.translatable("item.spear_origin.additions_slot_text"), // 右边格子的提示
-                emptyBaseSlotTextures,
-                emptyAdditionsSlotTextures
-        ));
+        // 使用 7 参数构造器
+        return registerItem(id, new SpearTemplateItem(appliesTo, ingredients, title, baseDesc, addDesc, icons, materials));
+    }
+
+    /**
+     * 辅助：翻译文本包装器
+     */
+    private static MutableText t(String key) {
+        return Text.translatable(Util.createTranslationKey("item", new Identifier(SpearOrigin.MOD_ID, key)));
     }
 
     //初始化方法
@@ -84,42 +86,10 @@ public class ModItems {
     /**
       注册模版
      */
-    public static final Item WOOD_TO_STONE_TEMPLATE = registerSmithingTemplate(
-            "wood_to_stone_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_wood_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_stone"
-    );
-    public static final Item STONE_TO_COPPER_TEMPLATE = registerSmithingTemplate(
-            "stone_to_copper_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_stone_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_copper"
-    );
-    public static final Item COPPER_TO_IRON_TEMPLATE = registerSmithingTemplate(
-            "copper_to_iron_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_copper_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_iron"
-    );
-    public static final Item IRON_TO_GOLD_TEMPLATE = registerSmithingTemplate(
-            "iron_to_gold_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_iron_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_gold"
-    );
-    public static final Item GOLD_TO_DIAMOND_TEMPLATE = registerSmithingTemplate(
-            "gold_to_diamond_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_gold_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_diamond"
-    );
-    public static final Item DIAMOND_TO_NETHERITE_TEMPLATE = registerSmithingTemplate(
-            "diamond_to_netherite_template",
-            "item.spear_origin.smithing_template.wood_upgrade.applies_to_diamond_spear",
-            "item.spear_origin.smithing_template.wood_upgrade.ingredients_netherite"
-    );
-
-    /**
-     * 注册归元台
-     */
-    public static final Item SPEAR_REFORGING_TABLE = registerItem(
-            "spear_reforging_table",
-            new BlockItem(ModBlocks.SPEAR_REFORGING_TABLE, new FabricItemSettings())
-    );
+    public static final Item WOOD_TO_STONE_TEMPLATE = registerTemplate("wood_spear_template", "wood_spear");
+    public static final Item STONE_TO_COPPER_TEMPLATE = registerTemplate("stone_spear_template", "stone_spear");
+    public static final Item COPPER_TO_IRON_TEMPLATE = registerTemplate("copper_spear_template", "copper_spear");
+    public static final Item IRON_TO_GOLD_TEMPLATE = registerTemplate("iron_spear_template", "iron_spear");
+    public static final Item GOLD_TO_DIAMOND_TEMPLATE = registerTemplate("gold_spear_template", "gold_spear");
+    public static final Item DIAMOND_TO_NETHERITE_TEMPLATE = registerTemplate("diamond_spear_template", "diamond_spear");
 }

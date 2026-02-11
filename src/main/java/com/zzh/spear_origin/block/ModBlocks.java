@@ -17,7 +17,7 @@ public class ModBlocks {
     //注册重铸台
     //复制了铁块的属性
     public static final Block SPEAR_REFORGING_TABLE = registerBlock("spear_reforging_table",
-            new SpearReforgingTableBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).strength(4.0f)));
+            new SpearReforgingTableBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f)));
 
     /**
      * 辅助注册
