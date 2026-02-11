@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:copper_block"
+    },
+    "@": {
+      "item": "minecraft:copper_ingot"
+    },
+    "X": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "#@#",
+    "@X@",
+    "#@#"
+  ],
+  "result": {
+    "item": "spear_origin:stone_spear_template"
+  },
+  "show_notification": true
+}

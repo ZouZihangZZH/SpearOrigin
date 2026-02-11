@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "!": {
+      "item": "minecraft:netherite_helmet"
+    },
+    "#": {
+      "item": "minecraft:netherite_leggings"
+    },
+    "$": {
+      "item": "minecraft:netherite_boots"
+    },
+    "*": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "@": {
+      "item": "minecraft:netherite_chestplate"
+    },
+    "X": {
+      "item": "minecraft:netherite_block"
+    }
+  },
+  "pattern": [
+    "!*@",
+    "*X*",
+    "#*$"
+  ],
+  "result": {
+    "item": "spear_origin:diamond_spear_template"
+  },
+  "show_notification": true
+}

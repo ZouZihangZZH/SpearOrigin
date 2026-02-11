@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:stone_spear_smithing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wood_spear_template": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "spear_origin:wood_spear_template"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wood_spear_template",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:stone_spear_smithing"
+    ]
+  },
+  "sends_telemetry_event": false
+}

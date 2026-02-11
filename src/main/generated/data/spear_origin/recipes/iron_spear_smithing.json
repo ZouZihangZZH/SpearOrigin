@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:iron_block"
+  },
+  "base": {
+    "item": "spear_origin:copper_spear"
+  },
+  "result": {
+    "item": "spear_origin:iron_spear"
+  },
+  "template": {
+    "item": "spear_origin:copper_spear_template"
+  }
+}

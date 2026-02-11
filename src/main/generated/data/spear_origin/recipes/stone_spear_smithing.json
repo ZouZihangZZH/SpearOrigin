@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:cobblestone"
+  },
+  "base": {
+    "item": "spear_origin:wood_spear"
+  },
+  "result": {
+    "item": "spear_origin:stone_spear"
+  },
+  "template": {
+    "item": "spear_origin:wood_spear_template"
+  }
+}

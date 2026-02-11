@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "!": {
+      "item": "minecraft:diamond_helmet"
+    },
+    "#": {
+      "item": "minecraft:diamond_leggings"
+    },
+    "$": {
+      "item": "minecraft:diamond_boots"
+    },
+    "*": {
+      "item": "minecraft:diamond"
+    },
+    "@": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "X": {
+      "item": "minecraft:diamond_block"
+    }
+  },
+  "pattern": [
+    "!*@",
+    "*X*",
+    "#*$"
+  ],
+  "result": {
+    "item": "spear_origin:gold_spear_template"
+  },
+  "show_notification": true
+}

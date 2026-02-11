@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:smooth_stone"
+    },
+    "M": {
+      "item": "minecraft:stone"
+    },
+    "T": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "TTT",
+    " M ",
+    "B B"
+  ],
+  "result": {
+    "item": "spear_origin:spear_reforging_table"
+  },
+  "show_notification": true
+}

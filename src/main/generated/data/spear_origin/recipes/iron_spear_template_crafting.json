@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_nugget"
+    },
+    "@": {
+      "item": "minecraft:gold_ingot"
+    },
+    "X": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "#@#",
+    "@X@",
+    "#@#"
+  ],
+  "result": {
+    "item": "spear_origin:iron_spear_template"
+  },
+  "show_notification": true
+}
