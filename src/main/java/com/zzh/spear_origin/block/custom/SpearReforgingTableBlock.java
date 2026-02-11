@@ -36,32 +36,39 @@ public class SpearReforgingTableBlock extends Block implements BlockEntityProvid
         return new SpearReforgingBlockEntity(pos, state);
     }
 
-    // ✅ 修复的核心：使用我们自己在下面定义的 checkType 方法
+    //定义 checkType 方法
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, ModBlockEntities.SPEAR_REFORGING_TABLE, SpearReforgingBlockEntity::tick);
     }
 
-    // --- 👇 请务必添加这个辅助方法 👇 ---
-    // 它的作用是帮 Java 编译器处理那复杂的泛型转换，消除红色报错
+    //处理复杂的泛型转换
     @SuppressWarnings("unchecked")
     @Nullable
     protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
         return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
     }
 
+    //右键交互
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
-            NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
-            if (screenHandlerFactory != null) {
-                player.openHandledScreen(screenHandlerFactory);
+            // 1. 直接获取这个位置的方块实体
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            // 2. 判断它是不是我们要的 "归元台实体"
+            if (blockEntity instanceof SpearReforgingBlockEntity) {
+                // 3. 强转并打开界面
+                // 因为 SpearReforgingBlockEntity 实现了 ExtendedScreenHandlerFactory，
+                // 所以这里可以直接传给 openHandledScreen
+                player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
             }
         }
         return ActionResult.SUCCESS;
     }
 
+    //破坏逻辑
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {

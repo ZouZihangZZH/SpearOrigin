@@ -9,16 +9,14 @@ import net.minecraft.util.Identifier;
 
 public class ModScreenHandlers {
 
-    // 定义变量
-    public static ScreenHandlerType<SpearReforgingScreenHandler> SPEAR_REFORGING_SCREEN_HANDLER;
+    // ✅ 正确：使用 static final 直接赋值。这样只会在类加载时执行一次。
+    public static final ScreenHandlerType<SpearReforgingScreenHandler> SPEAR_REFORGING_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER, new Identifier(SpearOrigin.MOD_ID, "spear_reforging"),
+                    new ExtendedScreenHandlerType<>(SpearReforgingScreenHandler::new));
 
+    // 这个方法的内容可以是空的，或者只打印日志
+    // 它的唯一作用是让 Java 加载这个类
     public static void registerScreenHandlers() {
-        // 使用 ExtendedScreenHandlerType 注册
-        // 这样我们才能在打开菜单时传递额外的数据（比如方块位置 BlockPos）
-        SPEAR_REFORGING_SCREEN_HANDLER = Registry.register(
-                Registries.SCREEN_HANDLER,
-                new Identifier(SpearOrigin.MOD_ID, "spear_reforging"),
-                new ExtendedScreenHandlerType<>(SpearReforgingScreenHandler::new)
-        );
+        SpearOrigin.LOGGER.info("Registering Screen Handlers for " + SpearOrigin.MOD_ID);
     }
 }

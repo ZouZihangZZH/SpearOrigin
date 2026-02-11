@@ -4,8 +4,11 @@ import com.zzh.spear_origin.block.ModBlocks;
 import com.zzh.spear_origin.block.entity.ModBlockEntities;
 import com.zzh.spear_origin.item.ModItemGroups;
 import com.zzh.spear_origin.item.ModItems;
+import com.zzh.spear_origin.screen.ModScreenHandlers;
+import com.zzh.spear_origin.screen.SpearReforgingScreen;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +21,8 @@ public class SpearOrigin implements ModInitializer {
 	public void onInitialize() {
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
-		ModBlockEntities.registerBlockEntities();
 		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerBlockEntities();
+		ModScreenHandlers.registerScreenHandlers();
 	}
 }

@@ -95,3 +95,7 @@ publishing {
 tasks.withType(ProcessResources).configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

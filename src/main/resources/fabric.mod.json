@@ -18,6 +18,9 @@
 		"main": [
 			"com.zzh.spear_origin.SpearOrigin"
 		],
+		"client": [
+			"com.zzh.spear_origin.SpearOriginClient"
+		],
 		"fabric-datagen": [
 			"com.zzh.spear_origin.SpearOriginDataGenerator"
 		]

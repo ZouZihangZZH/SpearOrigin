@@ -12,17 +12,18 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class SpearReforgingScreenHandler extends ScreenHandler {
+    //定义归元台中物品
     private final Inventory inventory;
-    // ✅ 1. 定义这个变量，报错就会消失
+    //定义数据同步
     private final PropertyDelegate propertyDelegate;
 
-    // --- 🏗️ 客户端构造函数 ---
+    // 客户端构造函数
     // 客户端不知道具体数据，所以创建一个假的 ArrayPropertyDelegate (2个数据：进度, 总工时)
     public SpearReforgingScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, new SimpleInventory(4), new ArrayPropertyDelegate(2));
     }
 
-    // --- 🏗️ 服务器构造函数 ---
+    // 服务器构造函数
     // 这是主构造函数，所有的逻辑都在这里
     public SpearReforgingScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate delegate) {
         super(ModScreenHandlers.SPEAR_REFORGING_SCREEN_HANDLER, syncId);
@@ -35,16 +36,16 @@ public class SpearReforgingScreenHandler extends ScreenHandler {
 
         inventory.onOpen(playerInventory.player);
 
-        // --- 1. 添加数据同步 (进度条) ---
+        // 添加数据同步
         // 这行代码让客户端能实时看到服务器的进度条变化
         addProperties(delegate);
 
-        // --- 2. 机器自带格子 (Input) ---
+        // 归元台自带格子 (Input)
         this.addSlot(new Slot(inventory, 0, 44, 20)); // 模版
         this.addSlot(new Slot(inventory, 1, 80, 20)); // 武器
         this.addSlot(new Slot(inventory, 2, 116, 20)); // 材料
 
-        // --- 3. 机器输出格子 (Output) ---
+        // 归元台输出格子 (Output)
         // 自定义匿名内部类：禁止玩家手动往里塞东西
         this.addSlot(new Slot(inventory, 3, 152, 20) {
             @Override
@@ -53,20 +54,20 @@ public class SpearReforgingScreenHandler extends ScreenHandler {
             }
         });
 
-        // --- 4. 玩家背包 (3x9) ---
+        // 玩家背包 (3x9)
         for (int m = 0; m < 3; ++m) {
             for (int l = 0; l < 9; ++l) {
                 this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
             }
         }
 
-        // --- 5. 玩家快捷栏 (1x9) ---
+        // 玩家快捷栏 (1x9)
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
 
-    // --- 辅助方法：获取进度条数据 (供 GUI 渲染使用) ---
+    // 辅助方法：获取进度条数据 (供 GUI 渲染使用)
     public boolean isCrafting() {
         return propertyDelegate.get(0) > 0;
     }
@@ -84,7 +85,7 @@ public class SpearReforgingScreenHandler extends ScreenHandler {
         return this.inventory.canPlayerUse(player);
     }
 
-    // --- Shift 键快速移动逻辑 (已更新为适配 4 格子) ---
+    // Shift 键快速移动逻辑
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
