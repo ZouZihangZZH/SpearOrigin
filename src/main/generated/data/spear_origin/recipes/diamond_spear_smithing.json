@@ -10,6 +10,6 @@
     "item": "spear_origin:diamond_spear"
   },
   "template": {
-    "item": "spear_origin:gold_spear_template"
+    "item": "spear_origin:gold_to_diamond_template"
   }
 }

@@ -7,12 +7,12 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_wood_spear_template": {
+    "has_wood_to_stone_template": {
       "conditions": {
         "items": [
           {
             "items": [
-              "spear_origin:wood_spear_template"
+              "spear_origin:wood_to_stone_template"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_wood_spear_template",
+      "has_wood_to_stone_template",
       "has_the_recipe"
     ]
   ],

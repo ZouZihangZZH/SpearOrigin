@@ -10,6 +10,6 @@
     "item": "spear_origin:stone_spear"
   },
   "template": {
-    "item": "spear_origin:wood_spear_template"
+    "item": "spear_origin:wood_to_stone_template"
   }
 }

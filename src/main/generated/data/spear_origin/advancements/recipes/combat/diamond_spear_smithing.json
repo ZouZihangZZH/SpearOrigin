@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gold_spear_template": {
+    "has_gold_to_diamond_template": {
       "conditions": {
         "items": [
           {
             "items": [
-              "spear_origin:gold_spear_template"
+              "spear_origin:gold_to_diamond_template"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_gold_spear_template",
+      "has_gold_to_diamond_template",
       "has_the_recipe"
     ]
   ],

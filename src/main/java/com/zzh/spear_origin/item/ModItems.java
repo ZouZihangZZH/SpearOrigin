@@ -87,10 +87,10 @@ public class ModItems {
     /**
       注册模版
      */
-    public static final Item WOOD_TO_STONE_TEMPLATE = registerTemplate("wood_spear_template", "wood_spear");
-    public static final Item STONE_TO_COPPER_TEMPLATE = registerTemplate("stone_spear_template", "stone_spear");
-    public static final Item COPPER_TO_IRON_TEMPLATE = registerTemplate("copper_spear_template", "copper_spear");
-    public static final Item IRON_TO_GOLD_TEMPLATE = registerTemplate("iron_spear_template", "iron_spear");
-    public static final Item GOLD_TO_DIAMOND_TEMPLATE = registerTemplate("gold_spear_template", "gold_spear");
-    public static final Item DIAMOND_TO_NETHERITE_TEMPLATE = registerTemplate("diamond_spear_template", "diamond_spear");
+    public static final Item WOOD_TO_STONE_TEMPLATE = registerTemplate("wood_to_stone_template", "wood_spear");
+    public static final Item STONE_TO_COPPER_TEMPLATE  = registerTemplate("stone_to_copper_template", "stone_spear");
+    public static final Item COPPER_TO_IRON_TEMPLATE  = registerTemplate("copper_to_iron_template", "copper_spear");
+    public static final Item IRON_TO_GOLD_TEMPLATE  = registerTemplate("iron_to_gold_template", "iron_spear");
+    public static final Item GOLD_TO_DIAMOND_TEMPLATE  = registerTemplate("gold_to_diamond_template", "gold_spear");
+    public static final Item DIAMOND_TO_NETHERITE_TEMPLATE  = registerTemplate("diamond_to_netherite_template", "diamond_spear");
 }

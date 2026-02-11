@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "spear_origin:item/iron_to_gold_template"
+  }
+}

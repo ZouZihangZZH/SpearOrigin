@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:diamond_spear_template_crafting"
+        "recipe": "minecraft:diamond_to_netherite_template_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:diamond_spear_template_crafting"
+      "minecraft:diamond_to_netherite_template_crafting"
     ]
   },
   "sends_telemetry_event": false

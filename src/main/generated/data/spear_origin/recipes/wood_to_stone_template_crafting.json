@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:gold_nugget"
+      "item": "minecraft:stone"
     },
     "@": {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:smooth_stone"
     },
     "X": {
-      "item": "minecraft:iron_block"
+      "item": "minecraft:oak_log"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "#@#"
   ],
   "result": {
-    "item": "spear_origin:iron_spear_template"
+    "item": "spear_origin:wood_to_stone_template"
   },
   "show_notification": true
 }

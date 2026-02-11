@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:stone"
+      "item": "minecraft:copper_block"
     },
     "@": {
-      "item": "minecraft:smooth_stone"
+      "item": "minecraft:copper_ingot"
     },
     "X": {
-      "item": "minecraft:oak_log"
+      "item": "minecraft:stone"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "#@#"
   ],
   "result": {
-    "item": "spear_origin:wood_spear_template"
+    "item": "spear_origin:stone_to_copper_template"
   },
   "show_notification": true
 }

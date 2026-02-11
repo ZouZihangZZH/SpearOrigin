@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_copper_spear_template": {
+    "has_copper_to_iron_template": {
       "conditions": {
         "items": [
           {
             "items": [
-              "spear_origin:copper_spear_template"
+              "spear_origin:copper_to_iron_template"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_copper_spear_template",
+      "has_copper_to_iron_template",
       "has_the_recipe"
     ]
   ],

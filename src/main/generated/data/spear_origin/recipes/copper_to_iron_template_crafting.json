@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:copper_block"
+      "item": "minecraft:iron_ingot"
     },
     "@": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:iron_nugget"
     },
     "X": {
-      "item": "minecraft:stone"
+      "item": "minecraft:copper_block"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "#@#"
   ],
   "result": {
-    "item": "spear_origin:stone_spear_template"
+    "item": "spear_origin:copper_to_iron_template"
   },
   "show_notification": true
 }

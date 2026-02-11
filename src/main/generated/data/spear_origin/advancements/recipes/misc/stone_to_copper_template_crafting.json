@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond_block": {
+    "has_stone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:diamond_block"
+              "minecraft:stone"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gold_spear_template_crafting"
+        "recipe": "minecraft:stone_to_copper_template_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_diamond_block",
+      "has_stone",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gold_spear_template_crafting"
+      "minecraft:stone_to_copper_template_crafting"
     ]
   },
   "sends_telemetry_event": false

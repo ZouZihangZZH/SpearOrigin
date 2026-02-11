@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_stone": {
+    "has_copper_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:stone"
+              "minecraft:copper_block"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:stone_spear_template_crafting"
+        "recipe": "minecraft:copper_to_iron_template_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_stone",
+      "has_copper_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:stone_spear_template_crafting"
+      "minecraft:copper_to_iron_template_crafting"
     ]
   },
   "sends_telemetry_event": false

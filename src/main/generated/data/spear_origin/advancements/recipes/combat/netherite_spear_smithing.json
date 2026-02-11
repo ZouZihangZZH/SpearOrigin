@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond_spear_template": {
+    "has_diamond_to_netherite_template": {
       "conditions": {
         "items": [
           {
             "items": [
-              "spear_origin:diamond_spear_template"
+              "spear_origin:diamond_to_netherite_template"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_diamond_spear_template",
+      "has_diamond_to_netherite_template",
       "has_the_recipe"
     ]
   ],

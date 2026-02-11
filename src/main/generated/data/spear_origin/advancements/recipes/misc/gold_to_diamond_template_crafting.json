@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_oak_log": {
+    "has_diamond_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:oak_log"
+              "minecraft:diamond_block"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:wood_spear_template_crafting"
+        "recipe": "minecraft:gold_to_diamond_template_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_oak_log",
+      "has_diamond_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:wood_spear_template_crafting"
+      "minecraft:gold_to_diamond_template_crafting"
     ]
   },
   "sends_telemetry_event": false
