@@ -2,6 +2,7 @@ package com.zzh.spear_origin.item;
 
 import com.zzh.spear_origin.SpearOrigin;
 import com.zzh.spear_origin.block.ModBlocks;
+import com.zzh.spear_origin.item.custom.SpearItem;
 import com.zzh.spear_origin.item.custom.SpearTemplateItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
@@ -56,31 +57,31 @@ public class ModItems {
      */
     public static final Item WOOD_SPEAR = registerItem(
             "wood_spear",
-            new SwordItem(ToolMaterials.WOOD, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.WOOD, 3, -2.4f, new FabricItemSettings(),1)
     );
     public static final Item STONE_SPEAR = registerItem(
             "stone_spear",
-            new SwordItem(ToolMaterials.STONE, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.STONE, 3, -2.4f, new FabricItemSettings(),2)
     );
     public static final Item COPPER_SPEAR = registerItem(
             "copper_spear",
-            new SwordItem(ModToolMaterials.COPPER, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ModToolMaterials.COPPER, 3, -2.4f, new FabricItemSettings(),3)
     );
     public static final Item IRON_SPEAR = registerItem(
             "iron_spear",
-            new SwordItem(ToolMaterials.IRON, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.IRON, 3, -2.4f, new FabricItemSettings(),4)
     );
     public static final Item GOLD_SPEAR = registerItem(
             "gold_spear",
-            new SwordItem(ToolMaterials.GOLD, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.GOLD, 3, -2.4f, new FabricItemSettings(),5)
     );
     public static final Item DIAMOND_SPEAR = registerItem(
             "diamond_spear",
-            new SwordItem(ToolMaterials.DIAMOND, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.DIAMOND, 3, -2.4f, new FabricItemSettings(),6)
     );
     public static final Item NETHERITE_SPEAR = registerItem(
             "netherite_spear",
-            new SwordItem(ToolMaterials.NETHERITE, 3, -2.4f, new FabricItemSettings())
+            new SpearItem(ToolMaterials.NETHERITE, 3, -2.4f, new FabricItemSettings(),7)
     );
 
     /**

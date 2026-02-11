@@ -1,6 +1,6 @@
 package com.zzh.spear_origin.block.entity;
 
-import com.zzh.spear_origin.item.ModItems;
+import com.zzh.spear_origin.item.custom.SpearItem; // 👈 记得导入这个！
 import com.zzh.spear_origin.screen.SpearReforgingScreenHandler;
 import com.zzh.spear_origin.util.ImplementedInventory;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -26,18 +26,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+//BlockEntity：带数据的方块
+//ExtendedScreenHandlerFactory：运行方块打开GUI
+//ImplementedInventory：通用工具接口
 public class SpearReforgingBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
 
-    // Index 0: 模版, 1: 武器, 2: 材料, 3: 输出
+    //物品库存：输入武器、模版、材料、输出
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-
+    //数据同步委托
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
     private int maxProgress = 72;
 
+    //定义构造函数
     public SpearReforgingBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.SPEAR_REFORGING_TABLE, pos, state);
-
+        super(ModBlockEntities.SPEAR_REFORGING_TABLE, pos, state);//调用父类BlockEntity进行构造
+        //初始化数据同步
         this.propertyDelegate = new PropertyDelegate() {
             public int get(int index) {
                 return switch (index) {
@@ -54,17 +58,18 @@ public class SpearReforgingBlockEntity extends BlockEntity implements ExtendedSc
         };
     }
 
-    // --- ⚙️ Tick 逻辑 ---
+    //Tick 逻辑
     public static void tick(World world, BlockPos pos, BlockState state, SpearReforgingBlockEntity entity) {
+        //客户端屏蔽
         if(world.isClient()) return;
 
+        // 这里有个小优化：先判断输出槽能不能放，再去检查配方，节省性能
         if(hasRecipe(entity)) {
             entity.progress++;
             markDirty(world, pos, state);
 
             if(entity.progress >= entity.maxProgress) {
                 craftItem(entity);
-                entity.resetProgress();
             }
         } else {
             entity.resetProgress();
@@ -72,79 +77,91 @@ public class SpearReforgingBlockEntity extends BlockEntity implements ExtendedSc
         }
     }
 
-    // --- 🔍 检查配方 (包含 NBT 转数检查) ---
+    //检查配方
     private static boolean hasRecipe(SpearReforgingBlockEntity entity) {
+        //创建快照：临时库存
         SimpleInventory inventory = new SimpleInventory(entity.size());
         for (int i = 0; i < entity.size(); i++) {
             inventory.setStack(i, entity.getStack(i));
         }
 
-        // 1. 基础配方匹配 (查询 JSON)
+        //查询配方管理器
         Optional<SmithingRecipe> match = entity.getWorld().getRecipeManager()
                 .getFirstMatch(RecipeType.SMITHING, inventory, entity.getWorld());
-
+        //未查询到返回为空
         if (match.isEmpty()) return false;
 
-        // 2. --- 🌟 特殊逻辑：检查“转数” ---
-        ItemStack weapon = entity.getStack(1); // 获取武器槽
+        //获取合成结果 (预览)
+        ItemStack resultStack = match.get().getOutput(entity.getWorld().getRegistryManager());
+        if (resultStack.isEmpty()) return false;
 
-        // 如果是木枪，检查是否达到 9 转
-        if (weapon.getItem() == ModItems.WOOD_SPEAR) { // 注意：请确保这里是 WOODEN_SPEAR 还是 WOOD_SPEAR，与你 Item 类一致
+        //转数检查
+        if (resultStack.getItem() instanceof SpearItem nextSpear) {
+            ItemStack currentWeapon = entity.getStack(1); // 输入槽的武器
+
+            // 获取当前 NBT 转数
             int currentTurn = 0;
-            if (weapon.hasNbt() && weapon.getNbt().contains("Turn")) {
-                currentTurn = weapon.getNbt().getInt("Turn");
+            if (currentWeapon.hasNbt() && currentWeapon.getNbt().contains("Turn")) {
+                currentTurn = currentWeapon.getNbt().getInt("Turn");
             }
 
-            if (currentTurn < 9) {
-                return false; // 转数不够，无法升级
+            // 获取下一阶武器需要的转数
+            int requiredTurn = nextSpear.getRequiredTurn();
+
+            // 如果当前转数 < 目标武器的要求，禁止合成
+            if (currentTurn < requiredTurn) {
+                return false;
             }
         }
 
-        // 3. 检查输出槽是否有空间
+        //检查输出槽
         return canInsertAmountIntoOutputSlot(inventory)
-                && canInsertItemIntoOutputSlot(inventory, match.get().craft(inventory, entity.getWorld().getRegistryManager()));
+                && canInsertItemIntoOutputSlot(inventory, resultStack);
     }
 
-    // --- 🔨 执行合成 ---
+    //执行合成
     private static void craftItem(SpearReforgingBlockEntity entity) {
+        //建立临时库存
         SimpleInventory inventory = new SimpleInventory(entity.size());
         for (int i = 0; i < entity.size(); i++) {
             inventory.setStack(i, entity.getStack(i));
         }
-
+        //再次确认配方
         Optional<SmithingRecipe> match = entity.getWorld().getRecipeManager()
                 .getFirstMatch(RecipeType.SMITHING, inventory, entity.getWorld());
 
         if(match.isPresent()) {
+            //NBT 继承
             ItemStack result = match.get().craft(inventory, entity.getWorld().getRegistryManager());
 
-            // 消耗原材料
+            // 消耗材料
             entity.removeStack(0, 1);
             entity.removeStack(1, 1);
             entity.removeStack(2, 1);
 
-            // 生成新武器
-            entity.setStack(3, new ItemStack(result.getItem(),
-                    entity.getStack(3).getCount() + result.getCount()));
+            // 将保留了 NBT 的结果放入输出槽
+            entity.setStack(3, result);
 
             entity.resetProgress();
         }
     }
 
+    //重置进度
     private void resetProgress() {
         this.progress = 0;
     }
 
-    // --- 辅助判断 ---
+    //辅助判断
     private static boolean canInsertItemIntoOutputSlot(SimpleInventory inventory, ItemStack output) {
         return inventory.getStack(3).getItem() == output.getItem() || inventory.getStack(3).isEmpty();
     }
 
+    //堆叠判断
     private static boolean canInsertAmountIntoOutputSlot(SimpleInventory inventory) {
         return inventory.getStack(3).getMaxCount() > inventory.getStack(3).getCount();
     }
 
-    // --- 💾 存盘/读盘 ---
+    //存盘
     @Override
     public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
@@ -152,6 +169,7 @@ public class SpearReforgingBlockEntity extends BlockEntity implements ExtendedSc
         nbt.putInt("spear_reforging.progress", progress);
     }
 
+    //读盘
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
@@ -159,7 +177,7 @@ public class SpearReforgingBlockEntity extends BlockEntity implements ExtendedSc
         progress = nbt.getInt("spear_reforging.progress");
     }
 
-    // --- 🖥️ GUI 相关 ---
+    //GUI 相关
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeBlockPos(this.pos);
