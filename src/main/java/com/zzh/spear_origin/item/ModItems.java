@@ -1,10 +1,8 @@
 package com.zzh.spear_origin.item;
 
+import com.zzh.spear_origin.block.ModBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
-import net.minecraft.item.SmithingTemplateItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -90,5 +88,38 @@ public class ModItems {
             "wood_to_stone_template",
             "item.spear_origin.smithing_template.wood_upgrade.applies_to_wood_spear",
             "item.spear_origin.smithing_template.wood_upgrade.ingredients_stone"
+    );
+    public static final Item STONE_TO_COPPER_TEMPLATE = registerSmithingTemplate(
+            "stone_to_copper_template",
+            "item.spear_origin.smithing_template.wood_upgrade.applies_to_stone_spear",
+            "item.spear_origin.smithing_template.wood_upgrade.ingredients_copper"
+    );
+    public static final Item COPPER_TO_IRON_TEMPLATE = registerSmithingTemplate(
+            "copper_to_iron_template",
+            "item.spear_origin.smithing_template.wood_upgrade.applies_to_copper_spear",
+            "item.spear_origin.smithing_template.wood_upgrade.ingredients_iron"
+    );
+    public static final Item IRON_TO_GOLD_TEMPLATE = registerSmithingTemplate(
+            "iron_to_gold_template",
+            "item.spear_origin.smithing_template.wood_upgrade.applies_to_iron_spear",
+            "item.spear_origin.smithing_template.wood_upgrade.ingredients_gold"
+    );
+    public static final Item GOLD_TO_DIAMOND_TEMPLATE = registerSmithingTemplate(
+            "gold_to_diamond_template",
+            "item.spear_origin.smithing_template.wood_upgrade.applies_to_gold_spear",
+            "item.spear_origin.smithing_template.wood_upgrade.ingredients_diamond"
+    );
+    public static final Item DIAMOND_TO_NETHERITE_TEMPLATE = registerSmithingTemplate(
+            "diamond_to_netherite_template",
+            "item.spear_origin.smithing_template.wood_upgrade.applies_to_diamond_spear",
+            "item.spear_origin.smithing_template.wood_upgrade.ingredients_netherite"
+    );
+
+    /**
+     * 注册归元台
+     */
+    public static final Item SPEAR_REFORGING_TABLE = registerItem(
+            "spear_reforging_table",
+            new BlockItem(ModBlocks.SPEAR_REFORGING_TABLE, new FabricItemSettings())
     );
 }
